@@ -1,8 +1,7 @@
-#This is an app that is meant to get input from the user
-#about what type of pizza they want and then give them
-#the correct price
+#PizzaApp
+#An app that keeps track of the price while you add toppings to a pizza of a certain size
 
-# I need to add up the price so I think I should set a global price value
+# I need to add up the price throughout so I think I should set a global price value
 global price
 
 
@@ -12,17 +11,19 @@ def getordername():
     ordername = input("\nWhat is the name for the order: ")
     ordername=str(ordername)
 
-#Then usually it would as you for like the size first
+#Then usually it would as you for the size first
 def getsize():
-    #global inputs are necessary to keep the price going into the next function
+
 
     global size
     global price
+    #This is the list with the sizes and prices
     size = input("\nOK, " + ordername + " What size pizza would you like "
                                       "\n\n Small - 12 inches, $12"
                                       "\n Medium - 14 inches, $14 "
                                       "\n Large - 16 inches, $16"
                                       "\n\n Enter Selection Here: ")
+   #This is where the input is accepted and converted into the corresponding price as an integer
     if size == "Large":
         print("\n\nOK, " + ordername + " next we're going to add toppings to your " +size + " pizza: ")
         price = int(16)
@@ -32,19 +33,13 @@ def getsize():
     elif size == "Small":
         print("\n\nOK, " + ordername + " next we're going to add toppings to your " + size + " pizza: ")
         price = int(12)
+    #Incase the user input is invalid
     else:
         print("\n\nThat wasn't an option, please try again!")
         getsize()
 
-# I need some sort of check for if the input is even an existing choice,
-#That is the else loop above now
 
-
-#Then we should probably add some toppings
-
-
-
-
+#Then it will add some toppings
 
 def getmeats():
     global meats
@@ -55,12 +50,16 @@ def getmeats():
     global size
 
 
+    #To show that the price is correct so far
     print("So far your pizza costs " +pricestring+" and each additional topping will cost extra!")
+    #This is the list and prices of toppings
     meats = input("\n Let's add some meats, here are your choices"
           "\n\n   Pepperoni - $3"
           "\n   Sausage - $2"
           "\n   Ham -$1"
           "\n\n   Enter your selection here: ")
+    #Taking the user input and doing the same thing as before but adding the amount
+    #existing global price value
     if meats == "Pepperoni":
         price = price + 3
     elif meats == "Sausage":
@@ -71,11 +70,8 @@ def getmeats():
         print("\n\nNot a valid choice, please select again.")
         getmeats()
     extrameats()
-    #I need to store all the toppings maybe. It adds up the price but I could
-    #probably print out the toppings in a list to double check the orer
 
-    #I'm thinking about how to add the option to get additional meats
-
+#The user has the option to choose more than one meat and it will continue to add prices
 def extrameats():
     global price
     global meats
@@ -87,6 +83,7 @@ def extrameats():
         print("Great Choice! How about some veggies also?")
         return
 
+#Copied the meat process but used vegetables
 def getveggies():
     global price
     veggies = input("\n Ok, Let's add some veggies, here are your choices"
@@ -116,7 +113,7 @@ def extraveggies():
         return
 
 
-
+#combining functions to make the complete process
 def orderpizza():
     getordername()
     getsize()
