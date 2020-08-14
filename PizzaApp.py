@@ -4,6 +4,10 @@
 # I need to add up the price throughout so I think I should set a global price value
 global price
 
+#This is the variable to make a ticket for the completed order
+ticket=[]
+mods = []
+
 
 # I'll keep it simple like its a kiosk and it just needs your name
 def getordername():
@@ -33,10 +37,13 @@ def getsize():
     elif size == "Small":
         print("\n\nOK, " + ordername + " next we're going to add toppings to your " + size + " pizza: ")
         price = int(12)
+
     #Incase the user input is invalid
     else:
         print("\n\nThat wasn't an option, please try again!")
         getsize()
+    ticket.append(size)
+
 
 
 #Then it will add some toppings
@@ -51,37 +58,56 @@ def getmeats():
 
 
     #To show that the price is correct so far
-    print("So far your pizza costs " +pricestring+" and each additional topping will cost extra!")
+    print("\nSo far your pizza costs " +pricestring+" and each additional topping will cost extra!")
     #This is the list and prices of toppings
-    meats = input("\n Let's add some meats, here are your choices"
+    meats = input("\n Let's add some meats, here are your choices: "
           "\n\n   Pepperoni - $3"
           "\n   Sausage - $2"
           "\n   Ham -$1"
-          "\n\n   Enter your selection here: ")
+          "\n\n   Enter your selection here or enter None: ")
     #Taking the user input and doing the same thing as before but adding the amount
     #existing global price value
     if meats == "Pepperoni":
         price = price + 3
+        ticket.append(meats)
+        extrameats()
     elif meats == "Sausage":
         price = price + 2
+        ticket.append(meats)
+        extrameats()
     elif meats == "Ham":
         price = price + 1
+        ticket.append(meats)
+        extrameats()
+    elif meats == "None":
+        ticket.append("No meat")
+        return
     else:
         print("\n\nNot a valid choice, please select again.")
         getmeats()
-    extrameats()
+
+
+
 
 #The user has the option to choose more than one meat and it will continue to add prices
 def extrameats():
     global price
     global meats
     #I'd like to find out how to get this to handle typos and case issues.
-    extrameats = input("\n Great Choice! Would you like any other or extra meats (Yes or No) ?: ")
-    if extrameats == "Yes":
+    extrameat = input("\n Great Choice! Would you like any other or extra meats (Yes or No) ?: ")
+    if extrameat == "Yes":
         getmeats()
-    if extrameats == "no":
-        print("Great Choice! How about some veggies also?")
+    if extrameat == "No":
+        print(extrameat)
+        print("\n Excellent Selections! Now how about some veggies also?")
         return
+    else:
+        print("\n\nNot a valid choice, please select again.")
+        extrameats()
+
+        
+
+
 
 #Copied the meat process but used vegetables
 def getveggies():
@@ -93,24 +119,67 @@ def getveggies():
           "\n\n   Enter your selection here: ")
     if veggies == "Mushrooms":
         price = price + 2
+        ticket.append(veggies)
+        extraveggies()
     elif veggies == "Onions":
         price = price + 1
+        ticket.append(veggies)
+        extraveggies()
     elif veggies == "Peppers":
         price = price + .5
+        ticket.append(veggies)
+        extraveggies()
+    elif veggies == "None":
+        return
     else:
         print("\n\nNot a valid choice, please select again.")
         getveggies()
-    extraveggies()
+
+
 
 def extraveggies():
     global price
     global veggies
-    extraveggies = input("\n Would you like any other or extra veggies?: ")
+    extraveggies = input("\n Would you like any other or extra veggies(Yes or No)?: ")
     if extraveggies == "Yes":
         getveggies()
-    if extraveggies == "no":
-        print("Great Choice! That will complete your order")
+    if extraveggies == "No":
+        print("\n Great Choices! That will complete your pizza")
+    else:
+        print("\n\nNot a valid choice, please select again.")
+        extraveggies()
+
+
+
+def checkorder():
+
+    print("\n")
+    print(ticket)
+    print(mods)
+    orderok= input("\n Does your order look correct on the screen(Yes or No): ")
+    if orderok == "Yes":
+        pricestring = str(price)
+        print("\n\nExcellent, Thank you for your order, " + ordername + " You're pizza will cost " + pricestring)
+    if orderok == "No":
+        pricestring = str(price)
+        print("That sucks, If it was it would have cost " +pricestring)
+
+def getmods():
+    modifs = input("If you have any special modifications or instructions please enter them here: ")
+    mods.append(modifs)
+
+
+def getwings():
+    wingsize = input("Would you like to add 6 or 12 wings: ")
+    if wingsize == "6":
+        ticket.append("6 wings")
         return
+    if wingsize == "12":
+        ticket.append("12 Wings")
+        return
+    else:
+        print("Sorry please try again.")
+        getwings()
 
 
 #combining functions to make the complete process
@@ -119,11 +188,19 @@ def orderpizza():
     getsize()
     getmeats()
     getveggies()
+    getmods()
+    getwings()
+    checkorder()
+
+
 
 
 
 
 
 orderpizza()
-pricestring = str(price)
-print("\n\nThank you for your order, " + ordername + " You're pizza will cost "+pricestring)
+
+
+
+
+
