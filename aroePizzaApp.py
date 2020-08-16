@@ -30,7 +30,7 @@ for x in order1List:
         print(price)
 
     else:
-        print(f"What is the absolute fuck is  '{order1}' we don't have that try again")
+        print(f"What in the absolute fuck is  '{order1}' we don't have that, try again")
         sys.exit()
 
     #add handling that reverts back to order1 input without having to rerun the programHERE
